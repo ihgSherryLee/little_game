@@ -36,11 +36,39 @@ $(function() {
             if(first == second) {
                 fliped.removeClass("fliped");
                 fliped.parent().css('visibility','hidden');
+                win();
             } else {
                 fliped.css('visibility','visible');
                 fliped.removeClass("fliped");
             }
         }
     }
+
+    function win() {
+        var card = $(".card"),len = card.length,num = 0;
+        for(var i = 0; i < len; i++) {
+            if(card[i].getAttribute("style") == "visibility: hidden;") num++;
+        }
+        if(num == len) {
+            $("#gameArea").css({'background-image':'url(images/endpage.png)','background-repeat':'no-repeat','background-size':'100%'});
+            clearInterval(timer);
+        }
+    }
+
+    // function reset() {
+    //     start();
+    // }
     start();
+    var time = 0;
+    var timer = setInterval(function() {
+        var hour = 0,minute = 0,second = 0;
+        time++;
+        second = time % 60;
+        minute = parseInt(time / 60) % 60;
+        hour = parseInt(time / 3600);
+        if(second < 10) second = "0" + second;
+        if(minute < 10) minute = "0" + minute;
+        if(hour < 10) hour = "0" + hour;
+        $(".time").html(hour+":"+minute+":"+second);
+    },1000);
 });
